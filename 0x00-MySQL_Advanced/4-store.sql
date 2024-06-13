@@ -1,6 +1,5 @@
 -- create trigger to descrease item quantities when orders made
 DROP TRIGGER IF EXISTS decrease_quantity;
-DELIMITER $$
 CREATE TRIGGER decrease_quantity
 AFTER INSERT ON orders
 FOR EACH ROW
