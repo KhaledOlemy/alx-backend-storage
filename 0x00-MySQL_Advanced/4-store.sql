@@ -1,3 +1,4 @@
+-- create trigger to descrease item quantities when orders made
 DROP TRIGGER IF EXISTS decrease_quantity;
 DELIMITER $$
 CREATE TRIGGER IF NOT EXISTS decrease_quantity
