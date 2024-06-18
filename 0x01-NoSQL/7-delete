@@ -1,2 +1,2 @@
-// delete documents for a collection with a constraint
-db.school.delete({"name": "Holberton school"});
+// delete documents for a collection on a constraint
+db.school.deleteMany({"name": "Holberton school"});
