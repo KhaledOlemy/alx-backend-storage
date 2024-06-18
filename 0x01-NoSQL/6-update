@@ -1,2 +1,2 @@
 // add attribute to a document in a collection
-db.school.find({"name": "Holberton school"}).update({"address": "972 Mission street"});
+db.school.find({"name": "Holberton school"}).forEach(collection.update({"address": "972 Mission street"}));
