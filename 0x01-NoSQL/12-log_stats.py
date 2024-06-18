@@ -13,7 +13,7 @@ def generate_status():
     print("Methods:")
     for method in methods:
         methodRequestCount = targetCollection.find({"method": method})
-        print("method {}: {}".format(method, methodRequestCount))
+        print("\tmethod {}: {}".format(method, methodRequestCount))
     statusChecks = targetCollection.find({"method": "GET", "path": "/status"})
     print(f"{len(statusChecks)} status check")
 
