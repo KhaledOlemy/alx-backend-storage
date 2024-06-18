@@ -8,7 +8,7 @@ def generate_status():
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     client = MongoClient('mongodb://127.0.0.1:27017')
     targetCollection = client.logs.nginx
-    nOfRequests = targetCollection.count_documents()
+    nOfRequests = targetCollection.count_documents({})
     print(f"{nOfRequests} logs")
     print("Methods:")
     for method in methods:
