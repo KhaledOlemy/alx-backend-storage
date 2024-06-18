@@ -15,7 +15,7 @@ def generate_status():
         methodRequestCount = targetCollection.find({"method": method})
         print("\tmethod {}: {}".format(method, methodRequestCount))
     statusChecks = targetCollection.count_documents({"method": "GET", "path": "/status"})
-    print(f"{len(statusChecks)} status check")
+    print(f"{statusChecks} status check")
 
 if __name__ == "__main__":
     generate_status()
