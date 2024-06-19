@@ -2,3 +2,4 @@
 *-init.sql
 tmp_res
 *-main.py
+*.pyc
