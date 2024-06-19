@@ -9,7 +9,7 @@ class Cache:
     def __init__(self) -> None:
         """Initializer"""
         self._redis = redis.Redis()
-        self._redis.flushdb(True)
+        self._redis.flushdb()
 
     def store(self, data: str | int | float | bytes) -> str:
         """stores a value in a new ID and returns the ID"""
