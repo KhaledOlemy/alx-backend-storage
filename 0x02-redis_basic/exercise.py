@@ -38,11 +38,12 @@ def replay(method: Callable) -> None:
     fOutputs = cache.lrange(f"{qname}:outputs", 0, -1)
     print(f"{qname} was called {fCalls} times:")
     for i, j in zip(fInputs, fOutputs):
-        print(f"{qname}(*{i.decode('UTF-8')}) -> {j.decode('UTF-8')}")
+        print("{}(*{}) -> {}".format(qname, i.decode('UTF-8'),
+                                     j.decode('UTF-8')))
 
 
 class Cache:
-    """Cache class"""
+    """Cache class that will include all functions wrapped as instructed"""
     def __init__(self) -> None:
         """Initializer"""
         self._redis = redis.Redis()
