@@ -30,7 +30,7 @@ def call_history(method: Callable) -> Callable:
 
 
 def replay(method: Callable) -> None:
-    """Replays all history of a method"""
+    """Replays all history of a method | gets the whole history stored"""
     qname = method.__qualname__
     cache = redis.Redis()
     fCalls = cache.get(qname).decode("UTF-8")
