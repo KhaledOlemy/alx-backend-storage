@@ -16,13 +16,13 @@ def counter(method: Callable) -> Callable:
     def methodWrapper(url):
         """Wrapper function"""
         myRedis.incr(f"count:{url}")
-        tempResponse = myRedis.get(f"cached-response:{url}")
-        if tempResponse:
-            return tempResponse.decode("UTF-8")
+        cachedResponse = myRedis.get(f"cached-response:{url}")
+        if cachedResponse:
+            return cachedResponse.decode("UTF-8")
         else:
-            tempResponse = method(url)
-            myRedis.setex(f"cached-response:{url}", 10, tempResponse)
-            return tempResponse
+            response = method(url)
+            myRedis.setex(f"cached-response:{url}", 10, response)
+            return response
     return methodWrapper
 
 
