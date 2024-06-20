@@ -15,6 +15,7 @@ def counter(method: Callable) -> Callable:
     @wraps(method)
     def methodWrapper(url):
         """Wrapper function"""
+        myRedis.incr(f"count:{url}")
         tempResponse = myRedis.get(f"cached-response:{url}")
         if tempResponse:
             return tempResponse.decode("UTF-8")
