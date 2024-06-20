@@ -6,7 +6,7 @@ import requests
 from typing import Callable
 from functools import wraps
 
-myRedis = redis.Redis()
+redis_ = redis.Redis()
 
 
 def counter(method: Callable) -> Callable:
@@ -15,13 +15,13 @@ def counter(method: Callable) -> Callable:
     @wraps(method)
     def methodWrapper(url):
         """Wrapper function"""
-        myRedis.incr(f"count:{url}")
-        cachedResponse = myRedis.get(f"cached:{url}")
+        redis_.incr(f"count:{url}")
+        cachedResponse = redis_.get(f"cached:{url}")
         if cachedResponse:
             return cachedResponse.decode("UTF-8")
         else:
             response = method(url)
-            myRedis.setex(f"cached:{url}", 10, response)
+            redis_.setex(f"cached:{url}", 10, response)
             return response
     return methodWrapper
 
