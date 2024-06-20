@@ -14,6 +14,20 @@ def count_calls(method: Callable) -> Callable:
     return incr
 
 
+def call_history(method: Callable) -> Callable:
+    """Stores history of Cache calls"""
+    inputList = method.__qualname__ + ":inputs"
+    outputList = method.__qualname__ + ":outputs"
+
+    @wraps(method)
+    def historyWrapper(self, *args, **kwargs):
+        """Actual wrapper function"""
+        self._redis.rpush(inputList, str(args))
+        output = method(self, *args, **kwargs)
+        self._redis.rpush(outputList, str(output))
+        return output
+    return historyWrapper
+
 
 class Cache:
     """Cache class"""
@@ -23,6 +37,7 @@ class Cache:
         self._redis.flushdb()
 
     @count_calls
+    @call_history
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """stores a value in a new ID and returns the ID"""
         newID = str(uuid4())
