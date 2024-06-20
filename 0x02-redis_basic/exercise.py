@@ -29,6 +29,18 @@ def call_history(method: Callable) -> Callable:
     return historyWrapper
 
 
+def replay(method: Callable) -> None:
+    """Replays all history of a method"""
+    qname = method.__qualname__
+    cache = redis.Redis()
+    fCalls = cache.get(qname).decode("UTF-8")
+    print(f"{qname} was called {len(list(fCalls))} times:")
+    fInputs = cache.lrange(f"{qname}:inputs", 0, -1)
+    fOutputs = cache.lrange(f"{qname}:outputs", 0, -1)
+    for i, j in zip(fInputs, fOutputs):
+        print(f"{qname}(*{i.decode('UTF-8')}) -> {j.decode('UTF-8')}")
+
+
 class Cache:
     """Cache class"""
     def __init__(self) -> None:
